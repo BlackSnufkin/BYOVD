@@ -11,8 +11,10 @@ Finding and exploiting process killer drivers with LOL
 - ksapi64_del.sys `SHA256: 26ED45461E62D733F33671BFD0724399D866EE7606F3F112C90896CE8355392E`
 
 Usage:
-To use Ksapi-Killer, you need to have the ksapi64.sys driver located at the same location as the executable\n
+To use Ksapi-Killer, you need to have the ksapi64.sys driver located at the same location as the executable
+
 you will be presented with an options menu where you can specify a process ID or name
+
 (the driver name must be ksapi64.sys so rename if needed)
 
 
