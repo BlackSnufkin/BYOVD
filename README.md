@@ -18,6 +18,8 @@ you will be presented with an options menu where you can specify a process ID or
 
 (the driver name must be ksapi64.sys so rename if needed)
 
+POC code havely ported from [TrueSightKiller](https://github.com/MaorSabag/TrueSightKiller)
+
 Tested on Windows 8.1
 
 ![poc_1](https://github.com/BlackSnufkin/BYOVD/assets/61916899/eeb62017-9451-4546-8903-042d8c0187f7)
