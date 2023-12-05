@@ -13,9 +13,7 @@ Finding and exploiting process killer drivers with LOL
 Usage:
 
 To use Ksapi-Killer, you need to have the ksapi64.sys driver located at the same location as the executable
-
 you will be presented with an options menu where you can specify a process ID or name
-
 (the driver name must be ksapi64.sys so rename if needed)
 
 The POC code relies heavily on [TrueSightKiller](https://github.com/MaorSabag/TrueSightKiller)
