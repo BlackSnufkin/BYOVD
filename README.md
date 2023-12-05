@@ -18,7 +18,7 @@ you will be presented with an options menu where you can specify a process ID or
 
 (the driver name must be ksapi64.sys so rename if needed)
 
-The POC's code relies heavily on [TrueSightKiller](https://github.com/MaorSabag/TrueSightKiller)
+The POC code relies heavily on [TrueSightKiller](https://github.com/MaorSabag/TrueSightKiller)
 
 Tested on Windows 8.1
 
