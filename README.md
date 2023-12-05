@@ -6,7 +6,7 @@ Finding and exploiting process killer drivers with LOL
 
 ---
 # Ksapi64-Killer
-- this a poc for the ksapi64 driver this poc is somoe how working on 2 drivers
+- this a poc for the ksapi64 driver this poc is some how working on 2 drivers
 - ksapi64.sys `SHA256: 1CD219F58B249A2E4F86553BDD649C73785093E22C87170798DAE90F193240AF`
 - ksapi64_del.sys `SHA256: 26ED45461E62D733F33671BFD0724399D866EE7606F3F112C90896CE8355392E`
 
