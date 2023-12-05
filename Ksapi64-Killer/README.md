@@ -1,4 +1,3 @@
----
 # Ksapi64-Killer
 - this a poc for the ksapi64 driver this poc is some how working on 2 drivers
 - ksapi64.sys SHA256: `1CD219F58B249A2E4F86553BDD649C73785093E22C87170798DAE90F193240AF`
@@ -20,4 +19,3 @@ Tested on Windows 8.1
 
 ![poc_2](https://github.com/BlackSnufkin/BYOVD/assets/61916899/3bed3148-c1c8-4717-8dc7-9eda926bc1ce)
 
---- 
