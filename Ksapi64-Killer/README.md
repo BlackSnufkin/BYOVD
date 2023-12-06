@@ -17,7 +17,7 @@ The POC code relies heavily on [TrueSightKiller](https://github.com/MaorSabag/Tr
 
 Tested on Windows 8.1 / Windows Server 2016
 
-Windows Server 2016
+Windows Server 2016 (Up to date)
 
 ![poc_srv](https://github.com/BlackSnufkin/BYOVD/assets/61916899/0d8df727-25db-4f69-a122-b79f59fb76c1)
 
