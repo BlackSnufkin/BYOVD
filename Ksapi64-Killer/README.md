@@ -13,9 +13,11 @@ you will be presented with an options menu where you can specify a process ID or
 
 The POC code relies heavily on [TrueSightKiller](https://github.com/MaorSabag/TrueSightKiller)
 
-Tested on Windows 8.1
+Tested on Windows 8.1 / Windows Server 2016
 
-![poc_1](https://github.com/BlackSnufkin/BYOVD/assets/61916899/eeb62017-9451-4546-8903-042d8c0187f7)
+Windows Server 2016
 
-![poc_2](https://github.com/BlackSnufkin/BYOVD/assets/61916899/3bed3148-c1c8-4717-8dc7-9eda926bc1ce)
+![poc_srv](https://github.com/BlackSnufkin/BYOVD/assets/61916899/0d8df727-25db-4f69-a122-b79f59fb76c1)
 
+
+![poc_srv_1](https://github.com/BlackSnufkin/BYOVD/assets/61916899/113fd59b-5ab1-46e5-8b82-241710b1efff)
