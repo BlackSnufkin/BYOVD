@@ -7,7 +7,7 @@
 
 Usage:
 
-To use Ksapi-Killer, you need to have the ksapi64.sys driver located at the same location as the executable
+To use Ksapi64-Killer, you need to have the ksapi64.sys driver located at the same location as the executable
 
 you will need to give it a process name
 
