@@ -13,13 +13,10 @@ you will be presented with an options menu where you can specify a process ID or
 
 (the driver name must be ksapi64.sys so rename if needed)
 
-The POC code relies heavily on [TrueSightKiller](https://github.com/MaorSabag/TrueSightKiller)
-
 Tested on Windows 8.1 / Windows Server 2016
 
 Windows Server 2016 (Up to date)
 
-![poc_srv](https://github.com/BlackSnufkin/BYOVD/assets/61916899/0d8df727-25db-4f69-a122-b79f59fb76c1)
+![ksapi64_poc](https://github.com/BlackSnufkin/BYOVD/assets/61916899/1e6ac4ca-ca16-4b4d-a43e-f9c7de8eb161)
 
-
-![poc_srv_1](https://github.com/BlackSnufkin/BYOVD/assets/61916899/113fd59b-5ab1-46e5-8b82-241710b1efff)
+![ksapi64_poc_1](https://github.com/BlackSnufkin/BYOVD/assets/61916899/b17419d9-e2ed-4e4b-8110-a083f8ec66ee)
