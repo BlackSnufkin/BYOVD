@@ -30,7 +30,6 @@ OPTIONS:
     -n, --name=process_name
 ```
 
-Tested on Windows 10 Pro
 
 Windows 10 Pro (Up to date)
 
