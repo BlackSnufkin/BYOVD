@@ -9,10 +9,26 @@ Usage:
 
 To use Ksapi-Killer, you need to have the ksapi64.sys driver located at the same location as the executable
 
-you will be presented with an options menu where you can specify a process ID or name
+you will need to give it a process name
 
 (the driver name must be ksapi64.sys so rename if needed)
 
+```text
+Ksapi64-Killer.exe 4.2
+BlackSnufkin
+Kills a process by name using a BYOVD
+
+USAGE:
+    Ksapi64-Killer.exe [FLAGS] [OPTIONS]
+
+FLAGS:
+    -h, --help       Prints help information
+    -v, --version    Prints version information
+
+OPTIONS:
+    -n, --name=process_name
+
+```
 Tested on Windows 8.1 / Windows Server 2016
 
 Windows Server 2016 (Up to date)
