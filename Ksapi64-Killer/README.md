@@ -29,7 +29,7 @@ OPTIONS:
     -n, --name=process_name
 
 ```
-Tested on Windows 8.1 / Windows Server 2016
+Tested on Windows 10 Build 14393 / Windows Server 2016
 
 Windows Server 2016 (Up to date)
 
