@@ -10,3 +10,5 @@ Finding and exploiting process killer drivers with LOL
 - https://alice.climent-pommeret.red/posts/process-killer-driver/
 
 
+# Disclaimer :loudspeaker:
+BYOVD is intended for educational and research purposes only. The author is not responsible for any misuse or damage caused by this program. Always seek permission before testing it against any target.
