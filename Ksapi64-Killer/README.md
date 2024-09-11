@@ -31,8 +31,7 @@ OPTIONS:
 ```
 Tested on Windows 10 Build 14393 / Windows Server 2016
 
-Windows Server 2016 (Up to date)
+ Windows 10 Build 14393
 
 ![ksapi64_poc](https://github.com/BlackSnufkin/BYOVD/assets/61916899/1e6ac4ca-ca16-4b4d-a43e-f9c7de8eb161)
 
-![ksapi64_poc_1](https://github.com/BlackSnufkin/BYOVD/assets/61916899/b17419d9-e2ed-4e4b-8110-a083f8ec66ee)
