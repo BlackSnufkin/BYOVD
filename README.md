@@ -1,6 +1,9 @@
 # BYOVD (Bring Your Own Vulnerable Driver)
 
-**BYOVD** is a collection of Proof of Concepts (PoCs) showcasing the exploitation of vulnerable drivers to terminate processes protected by AV/EDR solutions. This technique allows attackers to disable security software by leveraging flaws in signed drivers. These drivers are either not included in the Microsoft recommended anr not listed in the [LOLDrivers](https://www.loldrivers.io/) project (as of 12/08/2023).
+**BYOVD** is a collection of Proof of Concepts (PoCs) showcasing the exploitation of vulnerable drivers to terminate processes protected by AV/EDR solutions. This technique allows attackers to disable security software by leveraging flaws in signed drivers. These drivers are either not included in the Microsoft recommended driver block rules or not listed in the [LOLDrivers](https://www.loldrivers.io/) project (as of 12/08/2023). 
+
+However, since the initial discovery, the **TfSysMon** driver has been added to the LOLDrivers project and has also been abused by ransomware groups, as reported by Sophos. Attackers used the driver as part of a **BYOVD** technique to disable endpoint protection, as highlighted in [this blog post](https://sophos.com/news/2024/08/14/ransomware-attackers-introduce-new-edr-killer).
+
 
 
 
