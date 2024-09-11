@@ -33,7 +33,7 @@ This project is inspired by Alice Climent-Pommeret's blog post, [Finding and Exp
    - **ZwOpenProcess** or **NtOpenProcess**: These functions allow a driver to obtain a handle to any process, a necessary step before terminating it.
    - **ZwTerminateProcess** or **NtTerminateProcess**: These functions allow a driver to forcibly terminate a process.
    
-   By finding drivers that import both of these functions, you can identify candidates that may have the ability to kill processes.
+   By finding drivers that import ZwTerminateProcess, you can identify candidates that may have the ability to kill processes.
 
 3. **Leverage LOLDrivers Database**: Use the **LOLDrivers** project, which centralizes information about known vulnerable drivers. This database provides detailed technical data about drivers and their imported functions, giving you a head start in identifying potential candidates for exploitation.
 
