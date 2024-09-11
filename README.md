@@ -5,7 +5,6 @@
 ## Table of Contents
 - [Overview](#overview)
 - [POCs](#pocs)
-- [Usage Instructions](#usage-instructions)
 - [Detailed Driver Analysis](#detailed-driver-analysis)
 - [References](#references)
 - [Disclaimer](#disclaimer)
@@ -22,73 +21,53 @@ Below are the drivers and their respective PoCs available in this repository:
 - **[TfSysMon-Killer](https://github.com/BlackSnufkin/BYOVD/tree/main/TfSysMon-Killer)**: Targets `sysmon.sys` from ThreatFire System Monitor.
 - **[Viragt64-Killer](https://github.com/BlackSnufkin/BYOVD/tree/main/Viragt64-Killer)**: Targets `viragt64.sys` from Tg Soft.
 
-## Usage Instructions
-To exploit these vulnerable drivers, you need to place the corresponding driver file in the same directory as the executable and specify the process name to be terminated.
-
-### General Command Structure:
-```bash
-<driver-killer>.exe -n <process_name>
-```
-
-### Example for `Viragt64-Killer`:
-```bash
-PS C:\Users\User\Desktop> .\viragt64-Killer.exe -n target_process
-```
-
-### Flags and Options:
-- `-h, --help`: Prints help information.
-- `-v, --version`: Prints version information.
-- `-n, --name`: Specify the name of the process to be terminated.
-
-### PoC for Each Driver:
-#### Viragt64-Killer:
-- Targets: `viragt64.sys`
-- SHA256: `58A74DCEB2022CD8A358B92ACD1B48A5E01C524C3B0195D7033E4BD55EFF4495`
-- Usage Example:
-    ```bash
-    .\viragt64-Killer.exe -n ProcessName
-    ```
-- Tested on: Windows 10 Pro
-
-#### TfSysMon-Killer:
-- Targets: `sysmon.sys`
-- SHA256: `1C1A4CA2CBAC9FE5954763A20AEB82DA9B10D028824F42FFF071503DCBE15856`
-- Usage Example:
-    ```bash
-    .\TfSysMon-Killer.exe -n ProcessName
-    ```
-- Tested on: Windows 10 Pro
-
-#### Ksapi64-Killer:
-- Targets: `ksapi64.sys` and `ksapi64_del.sys`
-- SHA256:
-  - `ksapi64.sys`: `1CD219F58B249A2E4F86553BDD649C73785093E22C87170798DAE90F193240AF`
-  - `ksapi64_del.sys`: `26ED45461E62D733F33671BFD0724399D866EE7606F3F112C90896CE8355392E`
-- Usage Example:
-    ```bash
-    .\Ksapi64-Killer.exe -n ProcessName
-    ```
-- Tested on: Windows 10 Build 14393 / Windows Server 2016
 
 ## Detailed Driver Analysis
-This project is based on research inspired by Alice Climent-Pommeret's blog post on [Finding and Exploiting Process Killer Drivers with LOL for $3000](https://alice.climent-pommeret.red/posts/process-killer-driver/). The blog details the methodology of finding and exploiting drivers that can terminate protected processes.
 
-Some key points from the research:
-- Vulnerable drivers are identified using the **LOLDrivers** project, which centralizes known vulnerable drivers.
-- Drivers can be exploited via **IOCTL** calls to perform actions such as terminating processes.
-- Two examples of vulnerable drivers (AswArPot.sys and kEvP64.sys) were analyzed to demonstrate how IOCTL codes could be leveraged to kill processes from user-mode applications.
+This project is inspired by Alice Climent-Pommeret's blog post, [Finding and Exploiting Process Killer Drivers with LOL for $3000](https://alice.climent-pommeret.red/posts/process-killer-driver/), which explains how to identify and exploit process-killing drivers. The key takeaway from this research is how to systematically find **new vulnerable drivers** that can be abused to disable AV/EDR protections. Below are the most important elements to focus on from the research to discover and exploit such drivers.
+
+### Key Insights for Finding New Vulnerable Drivers:
+1. **Focus on IOCTL Codes**: The heart of exploiting drivers lies in understanding **IOCTL (Input/Output Control) codes**. IOCTLs allow communication between user-mode applications and kernel-mode drivers. Vulnerable drivers can expose dangerous functions through these IOCTL codes, such as terminating processes or accessing protected resources.
+
+2. **Look for Specific Function Imports**: In vulnerable drivers, look for functions that indicate process manipulation capabilities:
+   - **ZwOpenProcess** or **NtOpenProcess**: These functions allow a driver to obtain a handle to any process, a necessary step before terminating it.
+   - **ZwTerminateProcess** or **NtTerminateProcess**: These functions allow a driver to forcibly terminate a process.
+   
+   By finding drivers that import both of these functions, you can identify candidates that may have the ability to kill processes.
+
+3. **Leverage LOLDrivers Database**: Use the **LOLDrivers** project, which centralizes information about known vulnerable drivers. This database provides detailed technical data about drivers and their imported functions, giving you a head start in identifying potential candidates for exploitation.
+
+4. **Reverse Engineer Driver Logic**: Once you’ve identified a driver, reverse-engineer its IOCTL handling logic. **Focus on understanding how it processes commands**, particularly those sent via the `IRP_MJ_DEVICE_CONTROL` function. This is where you’ll find whether an IOCTL code corresponds to dangerous operations like process termination or access to sensitive resources.
+
+### The Approach to Finding New Drivers:
+To discover new vulnerable drivers, you can adopt the following structured approach:
+
+1. **Identify Driver Candidates**: Use the LOLDrivers project or your own collection of drivers to find those that import critical functions such as `ZwOpenProcess` and `ZwTerminateProcess`. A driver importing both indicates potential for process termination abuse.
+
+2. **Analyze IOCTL Codes**: After identifying a candidate driver, examine how it processes IOCTL codes. Look for patterns that allow user-mode applications to send commands for terminating processes. Focus on IOCTL codes mapped to `IRP_MJ_DEVICE_CONTROL`, as this is where most critical functionality resides.
+
+3. **Create Proof of Concept (PoC)**: Once you’ve reverse-engineered the vulnerable IOCTL logic, you can create a PoC to exploit the driver. The PoC should interact with the driver by sending the appropriate IOCTL code, along with a handle or PID of the target process to terminate it.
+
+### Example of This Process in Action:
+The blog by Alice Climent-Pommeret provides two case studies of vulnerable drivers (`AswArPot.sys` and `kEvP64.sys`), showing how they were exploited using this methodology. These drivers were found to expose process-killing capabilities through specific IOCTL codes, and the steps to reverse engineer and develop a PoC were outlined.
+
+Following this method, you can identify new vulnerable drivers by:
+- Searching for critical function imports,
+- Understanding how the driver processes IOCTL codes,
+- And leveraging LOLDrivers or similar resources to accelerate your search.
 
 ### IRP Major Functions of Interest:
-- `IRP_MJ_CREATE`: Called when the driver is created.
-- `IRP_MJ_CLOSE`: Called when the driver is closed.
-- `IRP_MJ_DEVICE_CONTROL`: Used to send IOCTLs to the driver.
+When investigating drivers, pay close attention to the following IRP (I/O Request Packet) major functions. These are key to understanding how drivers handle user requests:
+- **`IRP_MJ_CREATE`**: Called when communication with the driver is established.
+- **`IRP_MJ_CLOSE`**: Called when communication is terminated.
+- **`IRP_MJ_DEVICE_CONTROL`**: Critical for exploitation; used for sending IOCTL codes to drivers. Most process-killing vulnerabilities will be handled through this function.
 
-### Key Exploitation Steps:
-1. Identify vulnerable drivers using the **LOLDrivers Finder** script.
-2. Analyze driver IRPs and IOCTLs to determine possible process-killing capabilities.
-3. Develop a PoC that leverages the driver's vulnerability to terminate processes.
+### The Path to Exploitation:
+1. **Driver Identification**: Find drivers that import `ZwOpenProcess` and `ZwTerminateProcess`.
+2. **IOCTL Analysis**: Reverse engineer how IOCTLs are handled, focusing on dangerous commands like process termination.
+3. **Exploit Development**: Write a PoC that interacts with the driver through the vulnerable IOCTL code, passing the necessary parameters to terminate a target process.
 
-For more detailed analysis and reverse engineering steps, refer to Alice's [full blog post](https://alice.climent-pommeret.red/posts/process-killer-driver/).
+By following these steps, you can systematically find and exploit vulnerable drivers, similar to the process outlined in Alice’s [full blog post](https://alice.climent-pommeret.red/posts/process-killer-driver/).
 
 ## References
 - **Alice Climent-Pommeret's Blog**: [Finding and Exploiting Process Killer Drivers with LOL for $3000](https://alice.climent-pommeret.red/posts/process-killer-driver/)
@@ -96,6 +75,7 @@ For more detailed analysis and reverse engineering steps, refer to Alice's [full
 - **Microsoft Driver Block Rules**: [Microsoft's Recommended Driver Block Rules](https://learn.microsoft.com/en-us/windows/security/application-security/application-control/windows-defender-application-control/design/microsoft-recommended-driver-block-rules)
 - **Windows Kernel Programming** by Pavel Yosifovich
 - **Windows Internals, Part 1 & 2** by Mark E. Russinovich, Alex Ionescu, David Solomon
+
 
 ## Disclaimer :loudspeaker:
 **BYOVD** is for **educational and research purposes only**. The author is not responsible for any misuse or damage caused by these programs. Always seek explicit permission before using these tools on any system.
