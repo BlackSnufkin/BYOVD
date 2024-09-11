@@ -84,4 +84,4 @@ By following these steps, you can systematically find and exploit vulnerable dri
 
 
 ## Disclaimer :loudspeaker:
-**BYOVD** is for **educational and research purposes only**. The author is not responsible for any misuse or damage caused by these programs. Always seek explicit permission before using these tools on any system.
+**The BYOVD Project** is for **educational and research purposes only**. The author is not responsible for any misuse or damage caused by these programs. Always seek explicit permission before using these tools on any system.
