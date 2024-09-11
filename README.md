@@ -79,4 +79,3 @@ By following these steps, you can systematically find and exploit vulnerable dri
 
 ## Disclaimer :loudspeaker:
 **BYOVD** is for **educational and research purposes only**. The author is not responsible for any misuse or damage caused by these programs. Always seek explicit permission before using these tools on any system.
-> **Note**: Sophos researchers discovered that **RansomHub ransomware** attackers used a tool named **EDRKillShifter**, which exploited the vulnerable **TfSysmon driver** I discovered. This was part of a **BYOVD** attack to disable endpoint protection. Read more: ["Ransomware attackers introduce new EDR killer"](https://sophos.com/news/2024/08/14/ransomware-attackers-introduce-new-edr-killer).
