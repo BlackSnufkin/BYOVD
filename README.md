@@ -13,7 +13,7 @@
 - [💡 POCs](#-pocs)
 - [🔬 Detailed Driver Analysis](#-detailed-driver-analysis)
 - [🔗 References](#-references)
-- [⚠️ Disclaimer](#-disclaimer)
+- [⚠️ Disclaimer](#%EF%B8%8F-disclaimer)
   
 ## 🔍 Overview
 The **BYOVD technique** has recently gained popularity in offensive security, particularly with the release of tools such as SpyBoy's *Terminator* (sold for $3,000) and the *ZeroMemoryEx Blackout* project. These tools capitalize on vulnerable drivers to disable AV/EDR agents, facilitating further attacks by reducing detection.
