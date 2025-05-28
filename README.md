@@ -27,6 +27,20 @@ Below are the drivers and their respective PoCs available in this repository:
 
 This section demonstrates the complete A-Z reverse engineering methodology using the TfSysMon driver as a practical example. This process applies to any x64 Windows kernel driver analysis.
 
+## 🎯 Step 0: Pre-Analysis - Function Import Screening
+
+Check driver imports before starting reverse engineering.
+
+A basic process killer driver requires 2 things:
+
+a way to get a handle on a process (for instance **ZwOpenProcess** or **NtOpenProcess**)
+
+a way to terminate the process (for instance  **ZwTerminateProcess** or **NtTerminateProcess**)
+
+Check if a driver imports both function types. If a driver has in its imported functions Nt/ZwOpenProcess AND Nt/ZwTerminateProcess then it's a potential process killer driver candidate.
+
+Only after confirming these imports should you proceed to detailed reverse engineering in IDA Pro.
+
 ### 🛠️ Prerequisites for x64 Driver Analysis
 
 **Required Tools:**
