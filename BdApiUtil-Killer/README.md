@@ -33,5 +33,6 @@ OPTIONS:
 
 Windows 10 Pro (Up to date)
 
+![CVE-2024-51324](https://github.com/user-attachments/assets/e14b806b-eff4-4ef7-a34b-14abf9b86f86)
 
 
