@@ -1,0 +1,15 @@
+[package]
+name = "BdApiUtil-Killer"
+version = "0.1.0"
+edition = "2021"
+
+[profile.release]
+opt-level = "z"     # Optimize for size.
+lto = true          # Enable Link Time Optimization
+codegen-units = 1   # Reduce number of codegen units to increase optimizations.
+strip = true        # Automatically strip symbols from the binary.
+
+[dependencies]
+winapi = { version = "0.3.9", features = ["minwindef", "winnt", "minwinbase", "winsvc", "handleapi", "fileapi", "ioapiset", "processthreadsapi", "winerror", "processenv", "tlhelp32"] }
+clap = "0.5.0"
+ctrlc = "3.3"
