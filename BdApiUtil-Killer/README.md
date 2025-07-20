@@ -15,9 +15,9 @@ you will need to give it a process name
 ```text
 
 PS C:\Users\User\Desktop> .\BdApiUtil-Killer.exe -h
-BdApiUtil-Killer.exe 5.0
+BdApiUtil-Killer.exe 1.0
 BlackSnufkin
-Kills a process by name using a BYOVD
+Kills a process by name using BdApiUtil64 driver
 
 USAGE:
     BdApiUtil-Killer.exe [FLAGS] [OPTIONS]

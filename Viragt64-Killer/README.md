@@ -16,9 +16,9 @@ you will need to give it a process name
 ```text
 
 PS C:\Users\User\Desktop> .\viragt64-Killer.exe -h
-viragt64-Killer.exe 4.2
+viragt64-Killer.exe 1.0
 BlackSnufkin
-Kills a process by name using a BYOVD
+Kills a process by name using viragt64 driver
 
 USAGE:
     viragt64-Killer.exe [FLAGS] [OPTIONS]

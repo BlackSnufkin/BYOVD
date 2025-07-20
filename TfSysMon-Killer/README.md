@@ -16,9 +16,9 @@ you will need to give it a process name
 ```text
 
 PS C:\Users\User\Desktop> .\TfSysMon-Killer.exe -h
-TfSysMon-Killer.exe 4.2
+TfSysMon-Killer.exe 1.0
 BlackSnufkin
-Kills a process by name using a BYOVD
+Kills a process by name using Tfsysmon driver
 
 USAGE:
     TfSysMon-Killer.exe [FLAGS] [OPTIONS]

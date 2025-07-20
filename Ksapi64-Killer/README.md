@@ -14,9 +14,9 @@ you will need to give it a process name
 (the driver name must be ksapi64.sys so rename if needed)
 
 ```text
-Ksapi64-Killer.exe 4.2
+Ksapi64-Killer.exe 1.0
 BlackSnufkin
-Kills a process by name using a BYOVD
+Kills a process by name using ksapi64 driver
 
 USAGE:
     Ksapi64-Killer.exe [FLAGS] [OPTIONS]
