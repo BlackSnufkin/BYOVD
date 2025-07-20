@@ -242,15 +242,10 @@ fn get_pid_by_name(process_name: &str) -> Option<DWORD> {
 
 fn main() -> Result<()> {
     let matches = App::new("BYOVD Process Killer")
-        .version("5.0")
+        .version("1.0")
         .author("BlackSnufkin")
-        .about("Kills processes using BYOVD technique")
-        .arg(Arg::new("process_name")
-            .short("n")
-            .long("name")
-            .takes_value(true)
-            .required(true)
-            .help("Target process name"))
+        .about("Kills a process by name using BdApiUtil64 driver")
+        .arg(Arg::new("process_name").short("n").long("name").takes_value(true))
         .get_matches();
 
     let process_name = matches.value_of("process_name").unwrap();

@@ -1,7 +1,7 @@
 # BdApiUtil-Killer
 - PoC for CVE-2024-51324 vulnerability in BdApiUtil driver from Baidu Antivirus
 - BdApiUtil64.sys SHA256: `47EC51B5F0EDE1E70BD66F3F0152F9EB536D534565DBB7FCC3A05F542DBE4428`
-- The driver not on the list of [LolDrivers](https://www.loldrivers.io/) and not on the [Microsoft](https://learn.microsoft.com/en-us/windows/security/application-security/application-control/windows-defender-application-control/design/microsoft-recommended-driver-block-rules) recommended driver block rules (10/06/2025)
+- As of 2025-06-10, the driver is **not** listed on [LOLDDrivers](https://www.loldrivers.io/) or in [Microsoft's recommended driver block rules](https://learn.microsoft.com/en-us/windows/security/application-security/application-control/windows-defender-application-control/design/microsoft-recommended-driver-block-rules)
 
 
 Usage:

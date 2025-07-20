@@ -388,9 +388,9 @@ fn get_pid_by_name(process_name: &str) -> Option<DWORD> {
 
 fn main() {
     let matches = App::new("BYOVD Process Killer")
-        .version("4.2")
+        .version("1.0")
         .author("BlackSnufkin")
-        .about("Kills a process by name using a BYOVD")
+        .about("Kills a process by name using TfSysMon driver")
         .arg(Arg::new("process_name").short("n").long("name").takes_value(true))
         .get_matches();
 

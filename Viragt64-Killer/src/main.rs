@@ -376,9 +376,9 @@ fn get_current_dir() -> String {
 
 fn main() {
     let matches = App::new("BYOVD Process Killer")
-        .version("4.2")
+        .version("1.0")
         .author("BlackSnufkin")
-        .about("Kills a process by name using a BYOVD")
+        .about("Kills a process by name using viragt64 driver")
         .arg(Arg::new("process_name").short("n").long("name").takes_value(true))
         .get_matches();
 

@@ -2,7 +2,7 @@
 - this a poc for the ksapi64 driver this poc is some how working on 2 drivers
 - ksapi64.sys SHA256: `1CD219F58B249A2E4F86553BDD649C73785093E22C87170798DAE90F193240AF`
 - ksapi64_del.sys SHA256: `26ED45461E62D733F33671BFD0724399D866EE7606F3F112C90896CE8355392E`
-- The driver not on the list of [LolDrivers](https://www.loldrivers.io/) and not on the [Microsoft](https://learn.microsoft.com/en-us/windows/security/application-security/application-control/windows-defender-application-control/design/microsoft-recommended-driver-block-rules) recommended driver block rules (12/06/2023)
+- As of 2023-06-12, the driver is **not** listed on [LOLDDrivers](https://www.loldrivers.io/) or in [Microsoft's recommended driver block rules](https://learn.microsoft.com/en-us/windows/security/application-security/application-control/windows-defender-application-control/design/microsoft-recommended-driver-block-rules)
 
 
 Usage:
