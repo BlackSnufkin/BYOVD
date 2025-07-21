@@ -35,5 +35,6 @@ OPTIONS:
 
 Windows 10 Pro (Up to date)
 
+<img width="1915" height="816" alt="wsftprn-poc" src="https://github.com/user-attachments/assets/6bec86f5-ba35-4db0-8fbf-2439bae48d13" />
 
 
