@@ -5,7 +5,7 @@
 The collection includes both undocumented drivers and those with existing coverage in [LOLDDrivers](https://www.loldrivers.io/) or [Microsoft's recommended driver block rules](https://learn.microsoft.com/en-us/windows/security/application-security/application-control/windows-defender-application-control/design/microsoft-recommended-driver-block-rules).
 
 ---
-> Since its initial discovery, the TfSysMon driver has been added to LOLDrivers and abused by ransomware groups using the **EDRKillShifter** tool, as reported by [Sophos](https://sophos.com/news/2024/08/14/ransomware-attackers-introduce-new-edr-killer) & [ESET](https://www.welivesecurity.com/en/eset-research/shifting-sands-ransomhub-edrkillshifter/)
+> Since its initial discovery, the TfSysMon driver has been added to LOLDrivers and abused by ransomware groups using the **EDRKillShifter** tool, as reported by [Sophos](https://news.sophos.com/en-us/2024/08/14/edr-kill-shifter/) & [ESET](https://www.welivesecurity.com/en/eset-research/shifting-sands-ransomhub-edrkillshifter/)
 ---
 
 ## 📚 Table of Contents
