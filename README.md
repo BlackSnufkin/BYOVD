@@ -1,6 +1,11 @@
-# 🛠️ BYOVD (Bring Your Own Vulnerable Driver)
 
-**BYOVD** is a collection of PoCs demonstrating how vulnerable signed drivers can be exploited to disable AV/EDR solutions.
+
+
+<img width="956" height="538" alt="cropped-Aug 28, 2025, 03_39_19 PM" src="https://github.com/user-attachments/assets/3d4b6944-770c-47c8-883b-f4d9bb90eb4d" />
+
+
+
+**BYOVD** is a collection of PoCs demonstrating how vulnerable drivers can be exploited to disable AV/EDR solutions.
 
 The collection includes both undocumented drivers and those with existing coverage in [LOLDDrivers](https://www.loldrivers.io/) or [Microsoft's recommended driver block rules](https://learn.microsoft.com/en-us/windows/security/application-security/application-control/windows-defender-application-control/design/microsoft-recommended-driver-block-rules).
 
