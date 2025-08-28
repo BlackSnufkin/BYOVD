@@ -298,6 +298,14 @@ Total Size: 24 bytes (0x18) - matches driver's minimum size check
 
 > This methodology demonstrates how to systematically reverse engineer any Windows x64 kernel driver to identify similar vulnerabilities by following the execution path from user-mode communication through to dangerous kernel operations.
 
+<br>
+
+[![Buy me a beer](https://img.buymeacoffee.com/button-api/?text=Buy%20me%20a%20beer&emoji=🍺&slug=blacksnufkin&button_colour=FFDD00&font_colour=000000&font_family=Cookie&outline_colour=000000&coffee_colour=ffffff)](https://www.buymeacoffee.com/blacksnufkin)
+
+
+
+
+
 ## 🔗 References
 - **Alice Climent-Pommeret's Blog**: [Finding and Exploiting Process Killer Drivers with LOL for $3000](https://alice.climent-pommeret.red/posts/process-killer-driver/)
 - **LOLDrivers**: [A Central Repository of Known Vulnerable Drivers](https://www.loldrivers.io/)
