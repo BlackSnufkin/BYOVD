@@ -1,5 +1,5 @@
 # K7Terminator
-- PoC for **CVE-2025-52915 & CVE-2025-1055** in **K7RKScan.sys** (K7 Ultimate Security)
+- PoC for vulnerabilities I discovered in K7 Ultimate Security’s `K7RKScan.sys` (**CVE-2025-52915, CVE-2025-1055**).
 - Affects:
   - **Legacy builds (15.1.0.6–7)** -> low-privilege abuse
   - **Current build (23.0.0.10)** -> admin/BYOVD abuse
