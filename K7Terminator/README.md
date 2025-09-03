@@ -4,7 +4,7 @@
   - **Legacy builds (15.1.0.6–7)** -> low-privilege abuse
   - **Current build (23.0.0.10)** -> admin/BYOVD abuse
 - **[Vendor advisory issued](https://support.k7computing.com/index.php?/solutions/view-article/Advisory-issued-on-2nd-Sep-2025)**
-- Full write-up & details: **[CVE-2025-52915: A BYOVD Evolution Story](https://blacksnufkin.github.io/posts/)**
+- Full write-up & details: **[CVE-2025-52915: A BYOVD Evolution Story](https://blacksnufkin.github.io/posts/BYOVD-CVE-2025-52915/)**
 
 **Driver hashes:**
 - `K7RKScan.sys` **15.1.0.6** SHA256: `B16E217CDCA19E00C1B68BDFB28EAD53B20ADEABD6EDCD91542F9FBF48942877`
