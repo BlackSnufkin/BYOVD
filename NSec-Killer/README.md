@@ -36,4 +36,5 @@ OPTIONS:
 Windows 11 Pro (Up to date)
 
 
+<img width="1917" height="996" alt="Screenshot 2025-10-15 123923" src="https://github.com/user-attachments/assets/1411d548-ff51-4c2f-a62c-b1b3343ad257" />
 
