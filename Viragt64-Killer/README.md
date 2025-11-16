@@ -1,6 +1,6 @@
 # Viragt64-Killer
-- this a poc for the Viragt64 driver from Tg Soft (2016)
-- viragt64.sys SHA256: `58A74DCEB2022CD8A358B92ACD1B48A5E01C524C3B0195D7033E4BD55EFF4495`
+- This is a POC for the Viragt64 driver from Tg Soft (2016).
+- viragt64.sys SHA256: `58A74DCEB2022CD8A358B92ACD1B48A5E01C524C3B0195D7033E4BD55EFF4495`.
 - I initially developed the POC for personal use and didnt release it due that the driver is on the Microsoft recommended driver block rules and also in LOLDrivers.
 - However, upon discovering that it's being [abused](https://www.trendmicro.com/en_us/research/24/a/kasseika-ransomware-deploys-byovd-attacks-abuses-psexec-and-expl.html) in the wild, I've decided to share the POC. 
 

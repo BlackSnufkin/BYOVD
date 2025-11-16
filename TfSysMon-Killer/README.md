@@ -1,7 +1,7 @@
 # TfSysMon-Killer
-- this a poc for the TfSysMon driver from ThreatFire System Monitor (2013)
-- SysMon.sys SHA256: `1C1A4CA2CBAC9FE5954763A20AEB82DA9B10D028824F42FFF071503DCBE15856`
-- As of 2024-08-11, the driver is **listed on [LOLDDrivers](https://www.loldrivers.io/)** but remains **absent** from [Microsoft's recommended driver block rules](https://learn.microsoft.com/en-us/windows/security/application-security/application-control/windows-defender-application-control/design/microsoft-recommended-driver-block-rules) as of 2024-09-11
+- This is a POC for the TfSysMon driver from ThreatFire System Monitor (2013).
+- SysMon.sys SHA256: `1C1A4CA2CBAC9FE5954763A20AEB82DA9B10D028824F42FFF071503DCBE15856`.
+- As of 2024-09-11, the driver is **listed on [LOLDDrivers](https://www.loldrivers.io/)** but remains **absent** from [Microsoft's recommended driver block rules](https://learn.microsoft.com/en-us/windows/security/application-security/application-control/windows-defender-application-control/design/microsoft-recommended-driver-block-rules).
 
 
 
