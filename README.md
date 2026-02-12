@@ -15,6 +15,9 @@ The collection includes both undocumented drivers and those with existing covera
 
 ## 📚 Table of Contents
 - [🔍 Overview](#-overview)
+- [🏗️ Project Structure](#%EF%B8%8F-project-structure)
+- [🔧 Building](#-building)
+- [📦 byovd-lib](#-byovd-lib)
 - [💡 POCs](#-pocs)
 - [🔬 Complete Driver Reverse Engineering Process (x64)](#-complete-driver-reverse-engineering-process-x64)
 - [🔗 References](#-references)
@@ -25,16 +28,104 @@ The **BYOVD technique** has recently gained popularity in offensive security, pa
 
 This repository contains several PoCs developed for educational purposes, helping researchers understand how these drivers can be abused to terminate processes.
 
+## 🏗️ Project Structure
+
+The project is organized as a **Rust Cargo workspace**. All PoCs share a common library (`byovd-lib`) that handles the boilerplate: driver service lifecycle, IOCTL dispatch, process monitoring, and cleanup. Each killer is a thin binary (~50-100 lines) that only defines its driver-specific configuration.
+
+```
+BYOVD/
+├── Cargo.toml                        # Workspace root
+├── byovd-lib/                        # Shared library
+│   └── src/lib.rs
+├── BdApiUtil-Killer/                  # Uses byovd-lib
+├── K7Terminator/                      # Standalone (LPE + BYOVD modes)
+├── Ksapi64-Killer/                    # Uses byovd-lib
+├── NSec-Killer/                       # Uses byovd-lib
+├── STProcessMonitor-Killer/           # Uses byovd-lib (combined v114 + v2618)
+├── TfSysMon-Killer/                   # Uses byovd-lib
+├── Viragt64-Killer/                   # Uses byovd-lib
+└── Wsftprm-Killer/                    # Uses byovd-lib
+```
+
+## 🔧 Building
+
+**Prerequisites:** Rust toolchain and Visual Studio Build Tools with the Windows SDK.
+
+```bash
+# Build all tools (release, optimized + stripped)
+cargo build --release
+
+# Build a single tool
+cargo build --release -p BdApiUtil-Killer
+
+# Build multiple specific tools
+cargo build --release -p NSec-Killer -p Wsftprm-Killer
+```
+
+Binaries are output to `target/release/`. Copy the corresponding `.sys` driver file into the same directory as the executable before running.
+
+## 📦 byovd-lib
+
+`byovd-lib` is the shared library that all PoCs (except K7Terminator) are built on. It provides:
+
+- **`DriverConfig` trait** -- each PoC implements this to define its driver name, `.sys` filename, device path, IOCTL code, and input buffer format.
+- **`DriverManager`** -- RAII-based service lifecycle management (create, start, stop, delete).
+- **`ServiceHandle` / `FileHandle`** -- RAII wrappers that auto-close Windows handles on drop.
+- **`send_ioctl()`** -- opens the driver device and dispatches the kill IOCTL.
+- **`run_monitor()`** -- continuously scans for the target process by name and sends the kill IOCTL when found (Ctrl+C to stop).
+- **`run()`** -- the full BYOVD flow: preflight checks, load driver, monitor & kill, cleanup.
+- **Helpers** -- `get_pid_by_name()`, `ensure_running_as_local_system()`, `to_wstring()`.
+
+Adding a new driver PoC is straightforward -- implement the trait and call `byovd_lib::run()`:
+
+```rust
+use byovd_lib::{DriverConfig, Result};
+use clap::Parser;
+
+struct MyDriver;
+impl DriverConfig for MyDriver {
+    fn driver_name(&self) -> &str { "MyDriver" }
+    fn driver_file(&self) -> &str { "mydriver.sys" }
+    fn device_path(&self) -> &str { "\\\\.\\MyDevice" }
+    fn ioctl_code(&self) -> u32 { 0xDEAD }
+    fn build_ioctl_input(&self, pid: u32, _name: &str) -> Vec<u8> {
+        pid.to_ne_bytes().to_vec()
+    }
+}
+
+#[derive(Parser)]
+struct Cli {
+    #[arg(short = 'n', long = "name", required = true)]
+    process_name: String,
+}
+
+fn main() -> Result<()> {
+    let cli = Cli::parse();
+    byovd_lib::run(&MyDriver, &cli.process_name, None)
+}
+```
+
+Optional trait overrides with their defaults:
+
+| Method | Default | Purpose |
+|---|---|---|
+| `device_access()` | `SERVICE_ALL_ACCESS` | `CreateFileW` access flags |
+| `skip_unload()` | `false` | Skip driver cleanup (e.g., drivers that BSOD on unload) |
+| `ignore_ioctl_error()` | `false` | Treat IOCTL failure as success (e.g., NSecKrnl) |
+| `ioctl_output_size()` | `0` | Expected output buffer size |
+| `preflight_check()` | `Ok(())` | Pre-launch validation (e.g., LocalSystem check) |
+
 ## 💡 POCs
 Below are the drivers and their respective PoCs available in this repository:
 
-- **[BdApiUtil-Killer](https://github.com/BlackSnufkin/BYOVD/tree/main/BdApiUtil-Killer)**: Targets `BdApiUtil64.sys` from `Baidu AntiVirus`.
-- **[K7Terminator](https://github.com/BlackSnufkin/BYOVD/tree/main/K7Terminator)**: Targets `K7RKScan.sys` from `K7 Computing` [Full write-up](https://blacksnufkin.github.io/posts/BYOVD-CVE-2025-52915/).
-- **[Ksapi64-Killer](https://github.com/BlackSnufkin/BYOVD/tree/main/Ksapi64-Killer)**: Targets `ksapi64.sys` and `ksapi64_del.sys` from `Kingsoft Corporation`.
-- **[NSec-Killer](https://github.com/BlackSnufkin/BYOVD/tree/main/NSec-Killer)**: Targets `NSecKrnl.sys` from `NSEC` 
+- **[BdApiUtil-Killer](https://github.com/BlackSnufkin/BYOVD/tree/main/BdApiUtil-Killer)**: Targets `BdApiUtil64.sys` from `Baidu AntiVirus` (CVE-2024-51324).
+- **[K7Terminator](https://github.com/BlackSnufkin/BYOVD/tree/main/K7Terminator)**: Targets `K7RKScan.sys` from `K7 Computing` (CVE-2025-52915, CVE-2025-1055) -- [Full write-up](https://blacksnufkin.github.io/posts/BYOVD-CVE-2025-52915/).
+- **[Ksapi64-Killer](https://github.com/BlackSnufkin/BYOVD/tree/main/Ksapi64-Killer)**: Targets `ksapi64.sys` / `ksapi64_del.sys` from `Kingsoft Corporation`.
+- **[NSec-Killer](https://github.com/BlackSnufkin/BYOVD/tree/main/NSec-Killer)**: Targets `NSecKrnl.sys` from `NSEC` (ValleyRAT BYOVD reproduction).
+- **[STProcessMonitor-Killer](https://github.com/BlackSnufkin/BYOVD/tree/main/STProcessMonitor-Killer)**: Targets `STProcessMonitor.sys` from `Safetica` (CVE-2025-70795, supports v11.11.4 and v11.26.18).
 - **[TfSysMon-Killer](https://github.com/BlackSnufkin/BYOVD/tree/main/TfSysMon-Killer)**: Targets `sysmon.sys` from `ThreatFire System Monitor`.
 - **[Viragt64-Killer](https://github.com/BlackSnufkin/BYOVD/tree/main/Viragt64-Killer)**: Targets `viragt64.sys` from `Tg Soft`.
-- **[Wsftprm-Killer](https://github.com/BlackSnufkin/BYOVD/tree/main/Wsftprm-Killer)**: Targets `wsftprm.sys` from `Topaz Antifraud`.
+- **[Wsftprm-Killer](https://github.com/BlackSnufkin/BYOVD/tree/main/Wsftprm-Killer)**: Targets `wsftprm.sys` from `Topaz Antifraud` (CVE-2023-52271).
 
 ## 🔬 Complete Driver Reverse Engineering Process (x64)
 

@@ -1,0 +1,34 @@
+[workspace]
+members = [
+    "byovd-lib",
+    "BdApiUtil-Killer",
+    "K7Terminator",
+    "Ksapi64-Killer",
+    "NSec-Killer",
+    "STProcessMonitor-Killer",
+    "TfSysMon-Killer",
+    "Viragt64-Killer",
+    "Wsftprm-Killer",
+]
+resolver = "2"
+
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+
+[workspace.dependencies]
+winapi = { version = "0.3.9", features = [
+    "minwindef", "winnt", "minwinbase", "winsvc", "handleapi",
+    "fileapi", "ioapiset", "processthreadsapi", "winerror",
+    "processenv", "tlhelp32", "errhandlingapi", "securitybaseapi",
+] }
+clap = { version = "4.0", features = ["derive"] }
+ctrlc = "3.3"
+byovd-lib = { path = "byovd-lib" }
+
+[profile.release]
+opt-level = "z"
+lto = true
+codegen-units = 1
+strip = true
+panic = "abort"

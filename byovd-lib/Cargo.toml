@@ -1,8 +1,8 @@
 [package]
-name = "K7Terminator"
+name = "byovd-lib"
 version.workspace = true
 edition.workspace = true
 
 [dependencies]
-clap.workspace = true
 winapi.workspace = true
+ctrlc.workspace = true

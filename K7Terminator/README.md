@@ -6,6 +6,8 @@
 - **[Vendor advisory issued](https://support.k7computing.com/index.php?/solutions/view-article/Advisory-issued-on-2nd-Sep-2025)**
 - Full write-up & details: **[CVE-2025-52915: A BYOVD Evolution Story](https://blacksnufkin.github.io/posts/BYOVD-CVE-2025-52915/)**
 
+Unlike the other PoCs, K7Terminator is **standalone** (does not use `byovd-lib`) because it supports two distinct operational modes: LPE (wait for the K7 service to load the driver) and BYOVD (load the driver yourself).
+
 **Driver hashes:**
 - `K7RKScan.sys` **15.1.0.6** SHA256: `B16E217CDCA19E00C1B68BDFB28EAD53B20ADEABD6EDCD91542F9FBF48942877`
 - `K7RKScan.sys` **23.0.0.10** SHA256: `5C6CE55A85F5D4640BD1485A72D0812BC4F5188EE966C5FE334248A7175D9040`
@@ -18,7 +20,12 @@ Place the vulnerable `K7RKScan.sys` in the same folder as the executable.
 Provide a **process name** or **PID**.  
 (The file must be named `K7RKScan.sys`.)
 
+```bash
+# Build
+cargo build --release -p K7Terminator
 ```
+
+```text
 K7RKScan Process Terminator - LPE + BYOVD (CVE-2025-52915) PoC
 
 Usage: K7Terminator.exe [OPTIONS] --mode <mode>
