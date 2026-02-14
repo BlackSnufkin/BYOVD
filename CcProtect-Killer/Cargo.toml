@@ -1,8 +1,0 @@
-[package]
-name = "CcProtect-Killer"
-version.workspace = true
-edition.workspace = true
-
-[dependencies]
-byovd-lib.workspace = true
-clap.workspace = true
