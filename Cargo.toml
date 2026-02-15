@@ -2,6 +2,7 @@
 members = [
     "byovd-lib",
     "BdApiUtil-Killer",
+    "CcProtect-Killer",
     "K7Terminator",
     "Ksapi64-Killer",
     "NSec-Killer",

@@ -38,6 +38,7 @@ BYOVD/
 ├── byovd-lib/                        # Shared library
 │   └── src/lib.rs
 ├── BdApiUtil-Killer/                  # Uses byovd-lib
+├── CcProtectt-Killer/                  # Uses byovd-lib
 ├── K7Terminator/                      # Standalone (LPE + BYOVD modes)
 ├── Ksapi64-Killer/                    # Uses byovd-lib
 ├── NSec-Killer/                       # Uses byovd-lib
@@ -119,6 +120,7 @@ Optional trait overrides with their defaults:
 Below are the drivers and their respective PoCs available in this repository:
 
 - **[BdApiUtil-Killer](https://github.com/BlackSnufkin/BYOVD/tree/main/BdApiUtil-Killer)**: Targets `BdApiUtil64.sys` from `Baidu AntiVirus` (CVE-2024-51324).
+- **[CcProtect-Killer](https://github.com/BlackSnufkin/BYOVD/tree/main/CcProtect-Killer)**: Targets `CcProtect.sys` from `CnCrypt`.
 - **[K7Terminator](https://github.com/BlackSnufkin/BYOVD/tree/main/K7Terminator)**: Targets `K7RKScan.sys` from `K7 Computing` (CVE-2025-52915, CVE-2025-1055) -- [Full write-up](https://blacksnufkin.github.io/posts/BYOVD-CVE-2025-52915/).
 - **[Ksapi64-Killer](https://github.com/BlackSnufkin/BYOVD/tree/main/Ksapi64-Killer)**: Targets `ksapi64.sys` / `ksapi64_del.sys` from `Kingsoft Corporation`.
 - **[NSec-Killer](https://github.com/BlackSnufkin/BYOVD/tree/main/NSec-Killer)**: Targets `NSecKrnl.sys` from `NSEC` (ValleyRAT BYOVD reproduction).
