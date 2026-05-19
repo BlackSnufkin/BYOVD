@@ -4,7 +4,7 @@ PoC for arbitrary kernel read/write through `astra64.sys`, the kernel driver bun
 
 The driver exposes `\Device\PhysicalMemory` through an IOCTL with no caller authentication (`0x80002008`), plus arbitrary MSR read via `__readmsr` (`0x800020EC`). Writes go through the physical-memory section rather than virtual mappings, so HVCI/VBS page protections don't apply.
 
-Not on [LOLDDrivers](https://www.loldrivers.io/) and not in [Microsoft's recommended driver block rules](https://learn.microsoft.com/en-us/windows/security/application-security/application-control/windows-defender-application-control/design/microsoft-recommended-driver-block-rules) at time of writing.
+Not yet in [LOLDDrivers](https://www.loldrivers.io/) (pending issue [magicsword-io/LOLDrivers#294](https://github.com/magicsword-io/LOLDrivers/issues/294)) and not in [Microsoft's recommended driver block rules](https://learn.microsoft.com/en-us/windows/security/application-security/application-control/windows-defender-application-control/design/microsoft-recommended-driver-block-rules) at time of writing. See "Publication context" below.
 
 **Standalone.** Does not use `byovd-lib`. Not a member of the BYOVD workspace — has its own `[workspace]` declaration and its own `[profile.release]`. Build directly from this directory.
 
@@ -66,3 +66,7 @@ Tested on Windows 11 24H2 (build 26200.8457) with HVCI + VBS enabled. The R/W pr
 ## PoC
 
 ![Astra64-RW PoC — token swap → SYSTEM cmd on Windows 11 24H2](astra64_poc.png)
+
+## Publication context
+
+Originally found and developed internally; held as a private BYOVD asset. Publicly disclosed in April 2026 via [@weezerOSINT](https://x.com/weezerOSINT/status/2042114035487764512) and the corresponding LOLDrivers submission ([magicsword-io/LOLDrivers#294](https://github.com/magicsword-io/LOLDrivers/issues/294)). With the driver and technique now in the open, releasing the PoC here does not change the operational picture.
