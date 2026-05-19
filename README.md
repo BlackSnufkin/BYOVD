@@ -30,7 +30,7 @@ This repository contains several PoCs developed for educational purposes, helpin
 
 ## 🏗️ Project Structure
 
-The project is organized as a **Rust Cargo workspace**. All PoCs (except K7Terminator) share a common library (`byovd-lib`) that handles the boilerplate: driver service lifecycle, IOCTL dispatch, process monitoring, privilege adjustment, and cleanup. Each killer is a thin binary (~50-100 lines) that only defines its driver-specific configuration.
+The project is organized as a **Rust Cargo workspace**. Most PoCs share a common library (`byovd-lib`) that handles the boilerplate: driver service lifecycle, IOCTL dispatch, process monitoring, privilege adjustment, and cleanup. Each killer is a thin binary (~50-100 lines) that only defines its driver-specific configuration. **`K7Terminator` and `Astra64-RW` are standalone** — they have their own `[workspace]` declarations and are built directly from their own directories, not via the root workspace.
 
 ```
 BYOVD/
@@ -51,6 +51,7 @@ BYOVD/
 │       ├── privilege.rs             # enable_privilege / ensure_running_as_local_system
 │       └── util.rs                  # to_wstring / to_cstring / get_current_dir
 │
+├── Astra64-RW/                      # EnTech Astra32 / TVicHW astra64.sys -- standalone, kernel R/W demo (Shadow SSDT hijack -> SYSTEM)
 ├── BdApiUtil-Killer/                # Baidu BdApiUtil64 (CVE-2024-51324)
 ├── CcProtect-Killer/                # CnCrypt CcProtect
 ├── GameDriverX64-Killer/            # Fedeen GameDriverX64 (CVE-2025-61155)
@@ -205,6 +206,7 @@ fn main() -> Result<()> {
 ## 💡 POCs
 Below are the drivers and their respective PoCs available in this repository:
 
+- **[Astra64-RW](https://github.com/BlackSnufkin/BYOVD/tree/main/Astra64-RW)**: Targets `astra64.sys` from `EnTech Taiwan` (Astra32 / TVicHW) -- standalone kernel R/W PoC. Demoes the primitive via Shadow SSDT hijack -> SYSTEM token swap, tested on Win11 24H2 (build 26200.8457) with HVCI + VBS enabled.
 - **[BdApiUtil-Killer](https://github.com/BlackSnufkin/BYOVD/tree/main/BdApiUtil-Killer)**: Targets `BdApiUtil64.sys` from `Baidu AntiVirus` (CVE-2024-51324).
 - **[CcProtect-Killer](https://github.com/BlackSnufkin/BYOVD/tree/main/CcProtect-Killer)**: Targets `CcProtect.sys` from `CnCrypt`.
 - **[GameDriverX64-Killer](https://github.com/BlackSnufkin/BYOVD/tree/main/GameDriverX64-Killer)**: Targets `GameDriverX64.sys` from `Fedeen Games` (CVE-2025-61155).
