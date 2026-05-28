@@ -30,7 +30,7 @@ This repository contains several PoCs developed for educational purposes, helpin
 
 ## 🏗️ Project Structure
 
-The project is organized as a **Rust Cargo workspace**. Most PoCs share a common library (`byovd-lib`) that handles the boilerplate: driver service lifecycle, IOCTL dispatch, process monitoring, privilege adjustment, and cleanup. Each killer is a thin binary (~50-100 lines) that only defines its driver-specific configuration. **`K7Terminator` and `Astra64-RW` are standalone** — they have their own `[workspace]` declarations and are built directly from their own directories, not via the root workspace.
+The project is organized as a **Rust Cargo workspace**. Most PoCs share a common library (`byovd-lib`) that handles the boilerplate: driver service lifecycle, IOCTL dispatch, process monitoring, privilege adjustment, and cleanup. Each killer is a thin binary (~50-100 lines) that only defines its driver-specific configuration. **`K7Terminator`, `Astra64-RW`, and `Xhunter1-Killer` are standalone** — they have their own `[workspace]` declarations and are built directly from their own directories, not via the root workspace.
 
 ```
 BYOVD/
@@ -65,6 +65,7 @@ BYOVD/
 ├── UnknownKiller/                   # unattributed unknown.sys
 ├── Viragt64-Killer/                 # Tg Soft viragt64
 ├── Wsftprm-Killer/                  # Topaz wsftprm (CVE-2023-52271)
+├── Xhunter1-Killer/                 # Wellbia xhunter1.sys (CVE-2026-3609)
 └── Xkpsm-Killer/                    # JiranJikyosoft X-Keeper xkpsm
 ```
 
@@ -206,7 +207,7 @@ fn main() -> Result<()> {
 ## 💡 POCs
 Below are the drivers and their respective PoCs available in this repository:
 
-- **[Astra64-RW](https://github.com/BlackSnufkin/BYOVD/tree/main/Astra64-RW)**: Targets `astra64.sys` from `EnTech Taiwan` (Astra32 / TVicHW) -- standalone kernel R/W PoC. Demoes the primitive via Shadow SSDT hijack -> SYSTEM token swap, tested on Win11 24H2 (build 26200.8457) with HVCI + VBS enabled.
+- **[Astra64-RW](https://github.com/BlackSnufkin/BYOVD/tree/main/Astra64-RW)**: Targets `astra64.sys` from `EnTech Taiwan` (Astra32 / TVicHW) -- standalone kernel R/W PoC.
 - **[BdApiUtil-Killer](https://github.com/BlackSnufkin/BYOVD/tree/main/BdApiUtil-Killer)**: Targets `BdApiUtil64.sys` from `Baidu AntiVirus` (CVE-2024-51324).
 - **[CcProtect-Killer](https://github.com/BlackSnufkin/BYOVD/tree/main/CcProtect-Killer)**: Targets `CcProtect.sys` from `CnCrypt`.
 - **[GameDriverX64-Killer](https://github.com/BlackSnufkin/BYOVD/tree/main/GameDriverX64-Killer)**: Targets `GameDriverX64.sys` from `Fedeen Games` (CVE-2025-61155).
@@ -220,6 +221,7 @@ Below are the drivers and their respective PoCs available in this repository:
 - **[UnknownKiller](https://github.com/BlackSnufkin/BYOVD/tree/main/UnknownKiller)**: Targets `unknown.sys` from an unattributed vendor (driver origin TBD).
 - **[Viragt64-Killer](https://github.com/BlackSnufkin/BYOVD/tree/main/Viragt64-Killer)**: Targets `viragt64.sys` from `Tg Soft`.
 - **[Wsftprm-Killer](https://github.com/BlackSnufkin/BYOVD/tree/main/Wsftprm-Killer)**: Targets `wsftprm.sys` from `Topaz Antifraud` (CVE-2023-52271).
+- **[Xhunter1-Killer](https://github.com/BlackSnufkin/BYOVD/tree/main/Xhunter1-Killer)**: Targets legacy `xhunter1.sys` from `Wellbia` (XIGNCODE3, CVE-2026-3609).
 - **[Xkpsm-Killer](https://github.com/BlackSnufkin/BYOVD/tree/main/Xkpsm-Killer)**: Targets `xkpsm.sys` from `JiranJikyosoft X-Keeper`.
 
 ## 🔬 Complete Driver Reverse Engineering Process (x64)
