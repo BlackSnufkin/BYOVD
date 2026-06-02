@@ -8,6 +8,7 @@ members = [
     "K7Terminator",
     "Ksapi64-Killer",
     "NSec-Killer",
+    "PCTcore64-Killer",
     "PoisonX-Killer",
     "STProcessMonitor-Killer",
     "TfSysMon-Killer",
