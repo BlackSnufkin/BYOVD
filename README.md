@@ -51,6 +51,7 @@ BYOVD/
 │       ├── privilege.rs             # enable_privilege / ensure_running_as_local_system
 │       └── util.rs                  # to_wstring / to_cstring / get_current_dir
 │
+├── AppRemover-Killer/               # OPSWAT AppRemover ardrv.sys
 ├── Astra64-RW/                      # EnTech Astra32 / TVicHW astra64.sys -- standalone, kernel R/W demo (Shadow SSDT hijack -> SYSTEM)
 ├── BdApiUtil-Killer/                # Baidu BdApiUtil64 (CVE-2024-51324)
 ├── CcProtect-Killer/                # CnCrypt CcProtect
@@ -208,6 +209,7 @@ fn main() -> Result<()> {
 ## 💡 POCs
 Below are the drivers and their respective PoCs available in this repository:
 
+- **[AppRemover-Killer](https://github.com/BlackSnufkin/BYOVD/tree/main/AppRemover-Killer)**: Targets `ardrv.sys` from `OPSWAT AppRemover`.
 - **[Astra64-RW](https://github.com/BlackSnufkin/BYOVD/tree/main/Astra64-RW)**: Targets `astra64.sys` from `EnTech Taiwan` (Astra32 / TVicHW) -- standalone kernel R/W PoC.
 - **[BdApiUtil-Killer](https://github.com/BlackSnufkin/BYOVD/tree/main/BdApiUtil-Killer)**: Targets `BdApiUtil64.sys` from `Baidu AntiVirus` (CVE-2024-51324).
 - **[CcProtect-Killer](https://github.com/BlackSnufkin/BYOVD/tree/main/CcProtect-Killer)**: Targets `CcProtect.sys` from `CnCrypt`.
