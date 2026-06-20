@@ -1,6 +1,7 @@
 [workspace]
 members = [
     "byovd-lib",
+    "AppRemover-Killer",
     "BdApiUtil-Killer",
     "CcProtect-Killer",
     "GameDriverX64-Killer",
