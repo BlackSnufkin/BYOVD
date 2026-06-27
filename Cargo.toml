@@ -6,6 +6,7 @@ members = [
     "CcProtect-Killer",
     "GameDriverX64-Killer",
     "GoFlyDrv-Killer",
+    "HWAudioOs2Ec-Killer",
     "K7Terminator",
     "Ksapi64-Killer",
     "MonProcessEX-Killer",

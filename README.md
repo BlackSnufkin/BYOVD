@@ -57,6 +57,7 @@ BYOVD/
 ├── CcProtect-Killer/                # CnCrypt CcProtect
 ├── GameDriverX64-Killer/            # Fedeen GameDriverX64 (CVE-2025-61155)
 ├── GoFlyDrv-Killer/                 # Golink GoFlyDrv
+├── HWAudioOs2Ec-Killer/             # Huawei Audio driver HWAudioOs2Ec.sys
 ├── K7Terminator/                    # K7 RKScan -- standalone, LPE + BYOVD modes
 ├── Ksapi64-Killer/                  # Kingsoft ksapi64
 ├── MonProcessEX-Killer/             # HONOR MagicAnimation and HONOR PCManager MonProcessEX.sys
@@ -216,6 +217,7 @@ Below are the drivers and their respective PoCs available in this repository:
 - **[CcProtect-Killer](https://github.com/BlackSnufkin/BYOVD/tree/main/CcProtect-Killer)**: Targets `CcProtect.sys` from `CnCrypt`.
 - **[GameDriverX64-Killer](https://github.com/BlackSnufkin/BYOVD/tree/main/GameDriverX64-Killer)**: Targets `GameDriverX64.sys` from `Fedeen Games` (CVE-2025-61155).
 - **[GoFlyDrv-Killer](https://github.com/BlackSnufkin/BYOVD/tree/main/GoFlyDrv-Killer)**: Targets `GoFlyDrv.sys` from `Golink`.
+- **[HWAudioOs2Ec-Killer](https://github.com/BlackSnufkin/BYOVD/tree/main/HWAudioOs2Ec-Killer)**: Targets `HWAudioOs2Ec.sys` from `Huawei`.
 - **[K7Terminator](https://github.com/BlackSnufkin/BYOVD/tree/main/K7Terminator)**: Targets `K7RKScan.sys` from `K7 Computing` (CVE-2025-52915, CVE-2025-1055) -- [Full write-up](https://blacksnufkin.github.io/posts/BYOVD-CVE-2025-52915/).
 - **[Ksapi64-Killer](https://github.com/BlackSnufkin/BYOVD/tree/main/Ksapi64-Killer)**: Targets `ksapi64.sys` / `ksapi64_del.sys` from `Kingsoft Corporation`.
 - **[MonProcessEX-Killer](https://github.com/BlackSnufkin/BYOVD/tree/main/MonProcessEX-Killer)**: Targets `MonProcessEX.sys` from `HONOR`.
