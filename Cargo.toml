@@ -8,6 +8,7 @@ members = [
     "GoFlyDrv-Killer",
     "K7Terminator",
     "Ksapi64-Killer",
+    "MonProcessEX-Killer",
     "NSec-Killer",
     "PCTcore64-Killer",
     "PoisonX-Killer",
