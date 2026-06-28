@@ -1,7 +1,10 @@
 # HWAudioOs2Ec-Killer
 - PoC for vulnerability in HWAudioOs2Ec from Huawei Audio driver
 
-- As of 2026-06-27, the driver is **not** listed on [LOLDDrivers](https://www.loldrivers.io/) or in [Microsoft's recommended driver block rules](https://learn.microsoft.com/en-us/windows/security/application-security/application-control/windows-defender-application-control/design/microsoft-recommended-driver-block-rules)
+- As of 2026-06-27, the driver is **listed on [LOLDDrivers](https://www.loldrivers.io/)** but remains **absent** from [Microsoft's recommended driver block rules](https://learn.microsoft.com/en-us/windows/security/application-security/application-control/windows-defender-application-control/design/microsoft-recommended-driver-block-rules) as of 2026-06-27
+
+- The vulnerability structure of HWAudioOs2Ec drivers is highly similar to the newly discovered vulnerability structure of MonProcessEX drivers. I think MonProcessEX drivers has made some changes based on these HWAudioOs2Ec drivers, but it is still incomplete.
+
 
 Built on [`byovd-lib`](../byovd-lib/) -- implements the `DriverConfig` trait and delegates the full BYOVD flow to the shared library.
 
